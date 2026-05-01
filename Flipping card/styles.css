@@ -1,0 +1,178 @@
+/* Import Google Font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+/*The perspective property is typically applied to a parent element to establish a single 3D space that all of its child elements share. The child elements can then be transformed in 3D space using other CSS properties like transform: rotateY() or transform: translateZ().*/
+section {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    /*width: 100vw: This sets the width of an element to be 100% of the viewport's width. This includes the browser's scrollbar if it's present. The problem is that the viewport width (vw) doesn't account for the scrollbar's width, which is typically around 15-17 pixels. When an element is set to 100vw, it can overflow the viewport, causing a horizontal scrollbar to appear even if you don't want one*/
+    background: #121321;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    perspective: 1000px; /*creates a 3d space low value means camera is close*/
+}
+/*1.::before  targets a virtual element that's the very first child of every <section> element
+
+2. content: '' a required property for pseudo-elements to render. By setting it to an empty string, you're creating a box with no actual content inside
+
+3.position: absolute: This takes the pseudo-element out of the normal document flow and positions it relative to its nearest positioned ancestor
+*/
+
+section::before {
+    content: '';
+    position: absolute;
+    height: 240px;
+    width: 240px;
+    border-radius: 50%;
+    transform: translate(-150px, -100px);
+    background: linear-gradient(90deg,#9c27b0,#f3f5f5);
+}
+/*Absolute Element: A Sticker on a Poster out of doc flow nobody cares about it
+They are both in the same "layer" or stacking context behind the .container
+*/
+section::after {  /*render at last thats why above*/
+    content: '';
+    position: absolute;
+    height: 240px;
+    width: 240px;
+    border-radius: 50%;
+    transform: translate(150px, 100px);
+    background: linear-gradient(90deg,#9c27b0,#f3f5f5);
+}
+
+.container {
+    position: relative;
+    height: 225px;
+    width: 375px;
+    z-index: 100; /*stacking order*/
+    transition: 0.6s;
+    transform-style: preserve-3d;
+}
+
+.container:hover {
+    transform: rotateY(180deg);
+}
+
+/*backdrop filter give glass effect*/
+.container .card {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px); 
+    border-radius: 25px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+/* The front is the side you see initially. When you rotate the element 180 degrees, the back face comes into view. The backface-visibility property controls what happens when the back face is facing the user.*/
+.front-face {
+    backface-visibility: hidden;
+}
+
+.front-face header, .front-face .logo{
+    display: flex;
+    align-items: center;
+
+}
+
+.front-face header{
+    justify-content: space-between;
+}
+
+.front-face .logo img {
+    width: 48px;
+    margin-right: 10px;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.front-face .chip {
+    width: 50px;
+}
+
+.front-face .card-details {
+    margin-top: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+h6 {
+    font-weight: 400;
+    font-size: 10px;
+}
+
+h5.number {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+h5.name {
+    margin-top: 20px;
+}
+
+.card.back-face {
+    border: none;
+    padding:15px 25px 25px 25px;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+}
+
+.card.back-face h6 {
+    font-size: 8px;
+}
+
+.card.back-face .magnetic-strip {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    height: 45px;
+    width: 100%;
+    background: #000;
+}
+
+.card.back-face .signature {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 80px;
+    height: 40px;
+    width: 85%;
+    border-radius: 6px;
+    background: repeating-linear-gradient(
+        #fff,
+        #fff 3px,
+        #efefef 0px,
+        #efefef 9px
+    );
+}
+
+.signature i {
+    color: #000;
+    font-size: 12px;
+    padding: 4px 6px;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-right: -30px;
+    z-index: -1;
+}
+
+.card.back-face h5 {
+    font-size: 8px;
+    margin-top: 15px;
+}
